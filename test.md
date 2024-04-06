@@ -364,7 +364,7 @@ Task List
 Task List
 
 - [X] item 1
-    * [X] item A
+    * [x] item A
     * [ ] item B
         more text
         + [x] item a
