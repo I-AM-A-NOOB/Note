@@ -4,15 +4,12 @@
         - references.md
         - abbreviations.md
         - footnotes.md
-
     destination: destination.html
-
     # Meta Data
     title: Test Page
     author:
         - John Doe
         - Jane Doe
-
     # Settings overrides
     settings:
         pygments_style: github
@@ -76,7 +73,9 @@
                   class: mermaid
                   format: !!python/name:pymdownx.superfences.fence_code_format
 ---
+
 test: This tests the meta extension
+
 title: This title will be overridden by YAML
 
 # Cheat Sheet and Test
@@ -97,12 +96,19 @@ title: This title will be overridden by YAML
 ```
 
 # H1
+
 ## H2
+
 ### H3
+
 #### H4
+
 ##### H5
+
 ###### H6
+
 ### Duplicate Header
+
 ### Duplicate Header
 
 ## Paragraphs
@@ -115,6 +121,7 @@ New paragraph.
 ```
 
 This is a paragraph.
+
 I am still part of the paragraph.
 
 New paragraph.
@@ -170,48 +177,44 @@ __~~*strike italic 1 bold 2*~~__ and *~~__strike italic 1 bold 2__~~*
 
 <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>
 
-**bold 1** and __bold 2__
+**bold 1** and **bold 2**
 
-*italic 1*  and _italic 2_
+*italic 1* and *italic 2*
 
 ~~strike~~
 
-
 ***bold 1 and italic 1***
 
-___bold 2 and italic 2___
+***bold 2 and italic 2***
 
-__*bold 2 and italic 1*__
+***bold 2 and italic 1***
 
-**_bold 1 and italic 2_**
-
+***bold 1 and italic 2***
 
 ~~*strike italic 1*~~ and *~~strike italic 2~~*
 
-~~_strike italic 2_~~ and  _~~strike italic 2~~_
-
+~~*strike italic 2*~~ and *~~strike italic 2~~*
 
 ~~**strike bold 1**~~ and **~~strike bold 1~~**
 
-~~__strike bold 2__~~ and __~~strike bold 2~~__
-
+~~**strike bold 2**~~ and **~~strike bold 2~~**
 
 ~~***strike italic 1 bold 1***~~ and ***~~strike italic 1 bold 1~~***
 
-~~___strike italic 2 bold 2___~~ and ___~~strike italic 2 bold 2~~___
+~~***strike italic 2 bold 2***~~ and ***~~strike italic 2 bold 2~~***
 
 **~~*strike italic 1 bold 1*~~** and *~~**strike italic 1 bold 1**~~*
 
-__~~_strike italic 2 bold 2_~~__ and _~~__strike italic 2 bold 2__~~_
+**~~*strike italic 2 bold 2*~~** and *~~**strike italic 2 bold 2**~~*
 
-**~~_strike italic 2 bold 1_~~** and _~~**strike italic 2 bold 1**~~_
+**~~*strike italic 2 bold 1*~~** and *~~**strike italic 2 bold 1**~~*
 
-__~~*strike italic 1 bold 2*~~__ and *~~__strike italic 1 bold 2__~~*
-
+**~~*strike italic 1 bold 2*~~** and *~~**strike italic 1 bold 2**~~*
 
 ## Links
 
 Footnote, reference sources are provided in separate markdowns files specified in frontmatter.
+
 ```
 [Reference Link][1]
 
@@ -248,9 +251,11 @@ With this link (https://github.com/revolunet/sublimetext-markdown-preview/), it 
 Footnotes[^1] have a label[^label] and a definition[^!DEF]
 
 Web image
+
 ![Web Picture](http://www.revolunet.com/static/parisjs8/img/logo-revolunet-carre.jpg "Web Picture")
 
 Local image
+
 ![Local Picture](logo-revolunet-carre.jpg "Local Picture")
 
 www.google.com
@@ -272,6 +277,7 @@ With this link (https://github.com/revolunet/sublimetext-markdown-preview/), it 
 ## Abbreviation
 
 Abbreviations source are found in a separate markdown file specified in frontmatter.
+
 ```
 The HTML specification 
 is maintained by the W3C.
@@ -280,7 +286,8 @@ is maintained by the W3C.
 *[W3C]:  World Wide Web Consortium
 ```
 
-The HTML specification 
+The HTML specification
+
 is maintained by the W3C.
 
 ## Unordered List
@@ -303,16 +310,15 @@ Unordered List
 Unordered List
 
 - item 1
-    * item A
-    * item B
+    - item A
+    - item B
         more text
-        + item a
-        + item b
-        + item c
-    * item C
+        - item a
+        - item b
+        - item c
+    - item C
 - item 2
 - item 3
-
 
 ## Ordered List
 
@@ -364,13 +370,13 @@ Task List
 Task List
 
 - [X] item 1
-    * [x] item A
-    * [ ] item B
+    - [x] item A
+    - [ ] item B
         more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
+        - [x] item a
+        - [ ] item b
+        - [x] item c
+    - [X] item C
 - [ ] item 2
 - [ ] item 3
 
@@ -410,30 +416,28 @@ Really Mixed Lists
 Mixed Lists
 
 - item 1
-    * [X] item A
-    * [ ] item B
+    - [X] item A
+    - [ ] item B
         more text
         1. item a
         2. itemb
         3. item c
-    * [X] item C
+    - [X] item C
 - item 2
 - item 3
-
 
 Really Mixed Lists
 
 - item 1
-    * [X] item A
+    - [X] item A
     - item B
         more text
         1. item a
-        + itemb
-        + [ ] item c
-    3. item C
-2. item 2
+        - itemb
+        - [ ] item c
+    1. item C
+1. item 2
 - [X] item 3
-
 
 ## Dictionary
 
@@ -447,7 +451,8 @@ Dictionary
 ```
 
 Dictionary
-:   item 1
+
+: item 1
 
     item 2
 
@@ -466,7 +471,6 @@ Dictionary
     
     This is more of a block.
 
-
 ## Block Quotes
 
 ```
@@ -475,7 +479,8 @@ Dictionary
 ```
 
 > This is a block quote.
->> How does it look?
+>
+> > How does it look?
 > I think it looks good.
 
 ## Fenced Block
@@ -534,7 +539,7 @@ function doIt() {
 | Green         | ~~***Pears***~~ | Spinach           |
 ```
 
-| _Colors_      | Fruits          | Vegetable    |
+| *Colors*      | Fruits          | Vegetable    |
 | ------------- |:---------------:| ------------:|
 | Red           | *Apple*         | Pepper       |
 | ~~Orange~~    | Oranges         | **Carrot**   |
@@ -552,9 +557,9 @@ __this__works__too__
 
 Text with double__underscore__words.
 
-__Strong__ still works.
+**Strong** still works.
 
-__this__works__too__
+**this__works__too**
 
 ## Smarty
 
@@ -574,7 +579,7 @@ elipsis...
 
 da--sh
 
-elipsis...
+elipsis…
 
 ## Attribute List
 
@@ -588,6 +593,7 @@ Modified Text
 Normal Text
 
 Modified Text
+
 {: style="font-weight:bold;" }
 
 ## Admonition
@@ -628,23 +634,31 @@ Modified Text
 ```
 
 !!! Attention "Success!"
+
     You can use inline ~~stuff~~ markup too!
 
 !!! Hint "Info!"
+
     - Here is some info.
+
     - And some more
 
 !!! Caution "Warning!"
+
     - [X] Make sure you turn off the stove
+
     - [X] Don't run with scissors
 
 !!! Danger "Alert!"
+
     You really need to read [this](#admonition)!
 
 !!! Question "Question?"
+
     Are you serious?
 
 !!! Note "Note"
+
     :smile:
 
     > Not all markup can be placed in these boxes, but you can fit all sorts of things in them. But you will notice that the styles don't always play nice with each other.  Additional CSS could fix this though.
@@ -658,6 +672,7 @@ Modified Text
     | Green         | ~~***Pears***~~ | Spinach      |
 
 !!! Unknown "Title"
+
     Default class style
 
 ## Github Emoji
@@ -666,7 +681,7 @@ Modified Text
 This is a test for emoji :smile:.  The emojis are images linked to github assets :octocat:.
 ```
 
-This is a test for emoji :smile:.  The emojis are images linked to github assets :octocat:.
+This is a test for emoji :smile:. The emojis are images linked to github assets :octocat:.
 
 ### People
 
@@ -716,33 +731,34 @@ __^^*insert italic bold*^^__  *^^__insert italic bold 2__^^*
 
 ^^insert^^
 
-^^*insert italic*^^  *^^insert italic 2^^*
+^^*insert italic*^^ *^^insert italic 2^^*
 
-^^_insert italic_^^  _^^insert italic 2^^_
+^^*insert italic*^^ *^^insert italic 2^^*
 
-^^**insert bold**^^  **^^insert bold 2^^**
+^^**insert bold**^^ **^^insert bold 2^^**
 
-^^__insert bold__^^  __^^insert bold 2^^__
+^^**insert bold**^^ **^^insert bold 2^^**
 
-^^***insert italic bold***^^  ***^^insert italic bold 2^^***
+^^***insert italic bold***^^ ***^^insert italic bold 2^^***
 
-^^___insert italic bold___^^  ___^^insert italic bold 2^^___
+^^***insert italic bold***^^ ***^^insert italic bold 2^^***
 
-**^^*insert italic bold*^^**  *^^**insert italic bold 2**^^*
+**^^*insert italic bold*^^** *^^**insert italic bold 2**^^*
 
-__^^_insert italic bold_^^__  _^^__insert italic bold 2__^^_
+**^^*insert italic bold*^^** *^^**insert italic bold 2**^^*
 
-**^^_insert italic bold_^^**  _^^**insert italic bold 2**^^_
+**^^*insert italic bold*^^** *^^**insert italic bold 2**^^*
 
-__^^*insert italic bold*^^__  *^^__insert italic bold 2__^^*
+**^^*insert italic bold*^^** *^^**insert italic bold 2**^^*
 
 ## Progress
 
-Progress bars are block elements and it is recommened to put a newline before and after.  But they will be recognized inline, but they will be on their own line.
+Progress bars are block elements and it is recommened to put a newline before and after. But they will be recognized inline, but they will be on their own line.
 
-Normally you would just globally set your additional classes: `progressbar(add_classes=candystripe-animate)`, but here we will demonstrate that it works with the `attr_list` extension.  It will take inline style.
+Normally you would just globally set your additional classes: `progressbar(add_classes=candystripe-animate)`, but here we will demonstrate that it works with the `attr_list` extension. It will take inline style.
 
 To turn off level classes (which are used to decide special colors for certain percentages) you could just use `progressbar(level_class=False)`.
+
 ```
 | Test               | Result                                        |
 |--------------------|-----------------------------------------------|
@@ -819,7 +835,6 @@ as a fenced code block.
 ```
 
 - This is a list that contains multiple code blocks.
-
     - Here is an indented block
 
             ```
@@ -949,6 +964,9 @@ $$
 \[3 < 4\]
 
 \begin{align}
+
     p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+
     p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+
 \end{align}
