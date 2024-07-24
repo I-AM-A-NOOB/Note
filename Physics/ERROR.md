@@ -3,9 +3,7 @@
 ## 功能关系
 
 - > 小球竖直上抛，由于 $f$ 与 $s$ 始终反向 - $\Rightarrow$$W\neq0$
-
 - > 滑轮两侧木块的问题注意计算 $\Delta h$
-
 - > 传送带
   > $Q=\mu mg \Delta x$
   > $W_F=\Delta E_k+\Delta E_p$
@@ -20,7 +18,6 @@
 ## 平抛运动
 
 - > 分解：自身运动，沿受力 + 垂直受力
-
 - > 慢船过河距离最短
   > 确保 $\overrightarrow v_船 \bot \overrightarrow v_船 + \overrightarrow v_水$
 
