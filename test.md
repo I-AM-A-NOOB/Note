@@ -258,21 +258,21 @@ Local image
 
 ![Local Picture](logo-revolunet-carre.jpg "Local Picture")
 
-www.google.com
+<www.google.com>
 
-contact@revolunet.com
+<contact@revolunet.com>
 
 @revolunet
 
 Issue #1
 
-https://github.com/revolunet/sublimetext-markdown-preview/
+<https://github.com/revolunet/sublimetext-markdown-preview/>
 
-This is a link https://github.com/revolunet/sublimetext-markdown-preview/.
+This is a link <https://github.com/revolunet/sublimetext-markdown-preview/>.
 
-This is a link "https://github.com/revolunet/sublimetext-markdown-preview/".
+This is a link "<https://github.com/revolunet/sublimetext-markdown-preview/>".
 
-With this link (https://github.com/revolunet/sublimetext-markdown-preview/), it still works.
+With this link (<https://github.com/revolunet/sublimetext-markdown-preview/>), it still works.
 
 ## Abbreviation
 
@@ -310,13 +310,13 @@ Unordered List
 Unordered List
 
 - item 1
-    - item A
-    - item B
+  - item A
+  - item B
         more text
-        - item a
-        - item b
-        - item c
-    - item C
+    - item a
+    - item b
+    - item c
+  - item C
 - item 2
 - item 3
 
@@ -370,13 +370,13 @@ Task List
 Task List
 
 - [X] item 1
-    - [x] item A
-    - [ ] item B
+  - [x] item A
+  - [ ] item B
         more text
-        - [x] item a
-        - [ ] item b
-        - [x] item c
-    - [X] item C
+    - [x] item a
+    - [ ] item b
+    - [x] item c
+  - [X] item C
 - [ ] item 2
 - [ ] item 3
 
@@ -416,27 +416,29 @@ Really Mixed Lists
 Mixed Lists
 
 - item 1
-    - [X] item A
-    - [ ] item B
+  - [X] item A
+  - [ ] item B
         more text
         1. item a
         2. itemb
         3. item c
-    - [X] item C
+  - [X] item C
 - item 2
 - item 3
 
 Really Mixed Lists
 
 - item 1
-    - [X] item A
-    - item B
+  - [X] item A
+  - item B
         more text
         1. item a
-        - itemb
-        - [ ] item c
+    - itemb
+    - [ ] item c
     1. item C
+
 1. item 2
+
 - [X] item 3
 
 ## Dictionary
@@ -835,14 +837,14 @@ as a fenced code block.
 ```
 
 - This is a list that contains multiple code blocks.
-    - Here is an indented block
+  - Here is an indented block
 
             ```
             This will still be parsed
             as a normal indented code block.
             ```
 
-    - Here is a fenced code block:
+  - Here is a fenced code block:
 
         ```
         This will still be parsed
