@@ -1,0 +1,21 @@
+{
+  "obsidian-linter:lint-file": [
+    {
+      "modifiers": [
+        "Mod",
+        "Alt"
+      ],
+      "key": "L"
+    },
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "F"
+    }
+  ],
+  "editor:open-link-in-new-leaf": [],
+  "editor:delete-paragraph": [],
+  "editor:toggle-checklist-status": []
+}
