@@ -1,0 +1,10 @@
+{
+  "cssTheme": "Minimal",
+  "interfaceFontFamily": "霞鹜文楷等宽",
+  "textFontFamily": "霞鹜文楷等宽",
+  "monospaceFontFamily": "VictorMono Nerd Font Mono",
+  "baseFontSize": 20,
+  "accentColor": "",
+  "showRibbon": true,
+  "theme": "system"
+}

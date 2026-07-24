@@ -1,4 +1,4 @@
 *.ini
 .idea
 .vscode
-.obsidian
+.obsidian/workspace.json
