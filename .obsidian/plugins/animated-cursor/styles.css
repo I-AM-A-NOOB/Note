@@ -5,6 +5,13 @@ id: kotaindah55-animated-cursor
 settings:
 
 	-
+		id: cursor-thickness
+		title: Cursor thickness
+		description: The thickness of the cursor in pixels.
+		type: variable-number
+		format: px
+		default: 2
+	-
 		id: cursor-move-speed
 		title: Cursor speed
 		description: The speed of each cursor movement in miliseconds.
@@ -29,10 +36,23 @@ settings:
 		title: Infinity blinking
 		description: Whether the blinking is infinity. When turned on, "Blink count" setting doesn't have any effect.
 		type: class-toggle
-
+	-
+		id: cursor-override-color
+		title: Override cursor color
+		description: Override the default cursor color.
+		type: class-toggle
+	- 
+		id: cursor-color
+		title: Enable “Override cursor color” first to change the cursor's color.
+		type: variable-themed-color
+		format: hex
+		opacity: true
+		default-light: '#222222'
+		default-dark: '#dadada'
 */
 
 :root {
+	--cursor-thickness: 2px;
 	--cursor-move-speed: 80ms;
 	--cursor-move-easing: ease;
 	--cursor-blink-rate: 1000ms;
@@ -41,36 +61,36 @@ settings:
 }
 
 @keyframes cm-cursor-blink {
-	0%, 40% {
+	0%, 30% {
 		opacity: 0;
 	}
-	80%, 100% {
+	70%, 100% {
 		opacity: 1;
 	}
 }
 
-.markdown-source-view.mod-cm6 .cm-content {
+.markdown-source-view.mod-cm6 .cm-content .cm-line {
 	caret-color: transparent;
 }
 
-.cm-editor.cm-focused>.cm-scroller>.cm-cursorLayer.cm-blinkLayer,
-.cm-editor>.cm-scroller>.cm-cursorLayer.cm-overTableCell.cm-blinkLayer {
-	animation-name: cm-cursor-blink !important;
-	animation-duration: calc(var(--cursor-blink-rate) / 2) !important;
+.cm-editor.cm-focused > .cm-scroller > .cm-cursorLayer.cm-blinkLayer,
+.cm-editor > .cm-scroller > .cm-cursorLayer.cm-overTableCell.cm-blinkLayer {
+	animation-name: cm-cursor-blink;
+	animation-duration: calc(var(--cursor-blink-rate) / 2);
 	animation-timing-function: var(--cursor-blink-easing);
 	animation-direction: alternate-reverse;
 	animation-iteration-count: calc(var(--cursor-blink-count) * 2);
 }
 
-.cursor-blink-infinity .cm-editor.cm-focused>.cm-scroller>.cm-cursorLayer.cm-blinkLayer,
-.cursor-blink-infinity .cm-editor>.cm-scroller>.cm-cursorLayer.cm-overTableCell.cm-blinkLayer {
+.cursor-blink-infinity .cm-editor.cm-focused > .cm-scroller > .cm-cursorLayer.cm-blinkLayer,
+.cursor-blink-infinity .cm-editor > .cm-scroller > .cm-cursorLayer.cm-overTableCell.cm-blinkLayer {
 	animation-iteration-count: infinite;
 }
 
-.cm-editor.cm-focused>.cm-scroller>.cm-cursorLayer:not(.cm-blinkLayer) {
-	animation-name: none !important;
-	animation-duration: 0 !important;
-	animation: none !important;
+.cm-editor.cm-focused > .cm-scroller > .cm-cursorLayer:not(.cm-blinkLayer) {
+	animation-name: none;
+	animation-duration: 0;
+	animation: none;
 }
 
 .table-cell-wrapper .cm-cursorLayer {
@@ -78,10 +98,14 @@ settings:
 }
 
 .cm-editor .cm-cursor {
-	transition-property: transform, top, left;
+	transition-property: translate, top, left;
 	transition-duration: var(--cursor-move-speed);
 	transition-timing-function: var(--cursor-move-easing);
-	border-left-width: 2px;
+	border-left-width: var(--cursor-thickness);
+}
+
+.cursor-override-color .cm-editor .cm-cursor {
+	--caret-color: var(--cursor-color);
 }
 
 .cm-cursorLayer.cm-overTableCell .cm-cursor,
