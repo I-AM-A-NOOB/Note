@@ -1,0 +1,300 @@
+/* The track is bound to the editor's own visible height. `height: 100%`
+   resolves against a positioned ancestor that is taller than the editor area,
+   which pushed the bottom of the track below the window: the last stretch of
+   travel was unreachable and the marker could sit partly off screen. */
+.minimap-container {
+    /* Published on the view for the note's own text. The panel has no use for
+       them, and stopping them here keeps a resize from restyling the panel's
+       copy of the note; see .minimap-content below. */
+    --minimap-content-shift: initial;
+    --minimap-sizer-margin-left: initial;
+    --minimap-sizer-margin-right: initial;
+    position: absolute;
+    height: var(--minimap-track-height, 100%);
+    width: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Everything about where the panel sits lives here, on a class Obsidian does
+   not style. It used to live on the element below, which also wears Obsidian's
+   own `markdown-preview-view` so the note's styling reaches the copy — and on
+   mobile a rule of Obsidian's own outranked this `position: absolute`. The
+   panel fell back to its static position at the container's left edge, which
+   put it a document-width in from the left instead of against the right of the
+   pane: mid-screen on a tablet in landscape. Issue #11.
+
+   The width and top padding mirror the note's own layout so lines wrap at the
+   same points they do in the editor. `transform-origin` keeps the right edge
+   pinned while the width follows the note's. */
+.minimap-container .minimap-viewport {
+    position: absolute;
+    top: 0;
+    right: var(--minimap-scrollbar-gutter, 14px);
+    width: var(--minimap-doc-width, 100%);
+    pointer-events: none;
+    user-select: none;
+    scale: var(--scale);
+    transform-origin: top right;
+    z-index: 1;
+}
+
+/* Fills the wrapper and takes no part in placing it. `position: relative` is
+   what Obsidian gives `.markdown-preview-view` anyway, so keeping it leaves
+   descendants that position against it — collapse indicators, search
+   highlights — resolving against the same box they always did. The offsets are
+   pinned to `auto` so a rule that sets one cannot drag the rendered copy out
+   of its wrapper.
+
+   The extra specificity intentionally overrides .markdown-preview-view's
+   height/overflow so the content keeps its natural rendered height. The top
+   and bottom padding mirror the note's and are written inline.
+
+   The variables are reset here so nothing inside the rendered copy inherits
+   them. Custom properties inherit, and the copy is the whole note — tens of
+   thousands of elements on a long one — so a change to any variable it
+   inherited restyled and relaid every one of them: around 250ms on a long
+   note, for a track height that moved a pixel when the window was resized.
+   None of these are used inside the copy, so they stop here. The code metrics
+   are left alone because the copy's code blocks do use them. */
+.minimap-container .minimap-viewport > .minimap-content {
+    position: relative;
+    inset: auto;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    --minimap-doc-width: initial;
+    --minimap-track-height: initial;
+    --minimap-top-offset: initial;
+    --minimap-bottom-offset: initial;
+    --minimap-scrollbar-gutter: initial;
+    --minimap-slider-opacity: initial;
+    --minimap-slider-idle-opacity: initial;
+}
+
+/* Sized to the height the properties occupy in the note itself, whether they
+   render as the properties widget or as raw YAML. */
+.minimap-content .markdown-minimap-properties {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* A rendered <pre> is inset on both sides; an editor code line only on the
+   left. That difference alone wraps wide code one column early and scrambles
+   ASCII art, so drop the right inset unconditionally rather than wait for a
+   measurement that needs a code block to be on screen. */
+.minimap-content pre {
+    padding-right: 0;
+    overflow: hidden;
+    /* A rendered <pre> inherits the body's line height, but an editor code
+       line resolves the same ratio against the smaller code font. Deriving it
+       lands on the editor's value without needing a block on screen. */
+    line-height: var(--line-height-normal, normal);
+}
+
+/* Refines the box once a real code line has been measured, for themes whose
+   code padding differs from the rendered default. */
+.minimap-content.minimap-mirror-code pre {
+    padding-left: var(--minimap-code-padding-left, 0px);
+    padding-right: var(--minimap-code-padding-right, 0px);
+    line-height: var(--minimap-code-line-height, inherit);
+    font-size: var(--minimap-code-font-size, inherit);
+}
+
+/* A section the note has collapsed. Removed from flow rather than clipped, so
+   the panel loses exactly the height the note does and everything below it
+   lines up again. */
+.minimap-content .minimap-folded {
+    display: none;
+}
+
+/* The `:not()` is what keeps a folded section from leaving its height behind.
+   These markers carry an explicit pixel height, and in the editing modes that
+   height is the only thing holding the panel's blank lines open. This rule
+   matches at the same specificity as the fold rule above and is declared after
+   it, so `display: block` won the cascade on the markers alone: the note's
+   blocks vanished while their spacing stayed, and a folded section collapsed
+   to an empty gap of its original size. Reading view never showed it because
+   the markers are left unsized there. Issue #14. */
+.minimap-content .markdown-minimap-blank-run:not(.minimap-folded) {
+    display: block;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Three states, as in VS Code: faint at rest, legible while the pointer is over
+   the minimap, strongest while dragging. The idle and hover levels each have
+   their own setting — deriving idle from hover meant a theme dark enough to
+   need a strong idle slider got a solid block on hover. Dragging is still
+   scaled from hover, since it only has to read as "more than hover".
+   Only opacity transitions — top and height are rewritten on every scroll
+   event and must not lag behind the editor. */
+.minimap-slider {
+    right: var(--minimap-scrollbar-gutter, 14px);
+    position: absolute;
+    width: calc(var(--minimap-doc-width, 100%) * var(--scale));
+    background-color: var(--code-comment);
+    opacity: var(--minimap-slider-idle-opacity, 0.09);
+    transition: opacity 120ms ease-out;
+    z-index: 2;
+}
+
+/* Set from the hitbox's mouseenter/mouseleave rather than a :hover rule, since
+   the container does not take pointer events itself. The :not() keeps the
+   three states mutually exclusive, so dragging wins on its own terms instead
+   of depending on rule order against a more specific hover selector. */
+.minimap-container.is-hovered .minimap-slider:not(.dragging) {
+    opacity: var(--minimap-slider-opacity, 0.3);
+}
+
+/* Applies whether or not the pointer is still over the strip, since a drag
+   continues once it leaves. */
+.minimap-slider.dragging {
+    opacity: min(1, calc(var(--minimap-slider-opacity, 0.3) * 1.8));
+}
+
+.minimap-hitbox {
+    position: absolute;
+    top: var(--minimap-top-offset, 0px);
+    right: var(--minimap-scrollbar-gutter, 14px);
+    height: calc(
+        100% - var(--minimap-top-offset, 0px) - var(--minimap-bottom-offset, 0px)
+    );
+    width: calc(var(--minimap-doc-width, 100%) * var(--scale));
+    pointer-events: auto;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* Source mode: one element per source line, sized from the same variables
+   Obsidian's own Source-mode styling resolves, so the minimap reproduces the
+   note's line layout rather than a rendered version of it. */
+.minimap-content-source .minimap-source-line {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /* Each line's height is copied from CodeMirror, so clip rather than let a
+       line CodeMirror has not measured yet push the panel out of step. */
+    overflow: hidden;
+}
+
+/* Frontmatter keeps the body's size and line height in Source mode; only the
+   family differs, so heights stay identical to the editor's. */
+.minimap-content-source .minimap-source-line.mod-frontmatter {
+    font-family: var(--font-monospace);
+}
+
+/* Code lines resolve the shared ratio against the smaller code font, which is
+   how the editor arrives at its own code line height. */
+.minimap-content-source .minimap-source-line.mod-code {
+    font-family: var(--font-monospace);
+    font-size: var(--code-size);
+    line-height: var(--line-height-normal, 1.5);
+    background-color: var(--code-background);
+    /* Everything Prism does not mark — and the fences themselves, which are
+       not code — takes the same colour the editor gives unhighlighted code. */
+    color: var(--code-normal, var(--text-normal));
+}
+
+.minimap-content-source .minimap-source-line.mod-h1 {
+    font-size: var(--h1-size);
+    line-height: var(--h1-line-height, 1.2);
+    font-weight: var(--h1-weight, 700);
+    color: var(--h1-color, inherit);
+}
+.minimap-content-source .minimap-source-line.mod-h2 {
+    font-size: var(--h2-size);
+    line-height: var(--h2-line-height, var(--h1-line-height, 1.2));
+    font-weight: var(--h2-weight, 600);
+    color: var(--h2-color, inherit);
+}
+.minimap-content-source .minimap-source-line.mod-h3 {
+    font-size: var(--h3-size);
+    line-height: var(--h3-line-height, var(--h1-line-height, 1.2));
+    font-weight: var(--h3-weight, 600);
+    color: var(--h3-color, inherit);
+}
+.minimap-content-source .minimap-source-line.mod-h4 {
+    font-size: var(--h4-size);
+    line-height: var(--h4-line-height, var(--h1-line-height, 1.2));
+    font-weight: var(--h4-weight, 600);
+    color: var(--h4-color, inherit);
+}
+.minimap-content-source .minimap-source-line.mod-h5 {
+    font-size: var(--h5-size);
+    line-height: var(--h5-line-height, var(--h1-line-height, 1.2));
+    font-weight: var(--h5-weight, 600);
+    color: var(--h5-color, inherit);
+}
+.minimap-content-source .minimap-source-line.mod-h6 {
+    font-size: var(--h6-size);
+    line-height: var(--h6-line-height, var(--h1-line-height, 1.2));
+    font-weight: var(--h6-weight, 600);
+    color: var(--h6-color, inherit);
+}
+
+/* Source mode is highlighted in the editor too, so the panel keeps the same
+   colours. Scaled to a tenth, colour is most of what is left to tell a link
+   from a tag from a quote — the words themselves are long past reading.
+   Nothing here changes a font size, so no line can outgrow the height copied
+   from CodeMirror. */
+.minimap-content-source .minimap-source-line.mod-quote {
+    color: var(--text-muted);
+}
+.minimap-content-source .minimap-source-marker {
+    color: var(--list-marker-color, var(--text-faint));
+}
+.minimap-content-source .minimap-source-link {
+    color: var(--link-color, var(--text-accent));
+}
+.minimap-content-source .minimap-source-tag {
+    color: var(--tag-color, var(--text-accent));
+}
+.minimap-content-source .minimap-source-code-span {
+    color: var(--code-normal, var(--text-normal));
+    background-color: var(--code-background);
+}
+.minimap-content-source .minimap-source-strong {
+    font-weight: var(--bold-weight, 700);
+    color: var(--bold-color, inherit);
+}
+.minimap-content-source .minimap-source-em {
+    font-style: italic;
+    color: var(--italic-color, inherit);
+}
+.minimap-content-source .minimap-source-highlight {
+    background-color: var(--text-highlight-bg);
+}
+.minimap-content-source .minimap-source-strike {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.minimap-disabled .minimap-container {
+    display: none;
+}
+
+/* Optional breathing room between the note's text and the minimap.
+   Suggested by @2590812378 in issue #3.
+
+   Margins, not a transform: a transform makes the sizer the containing block
+   for every absolutely positioned descendant, and Obsidian's find-in-note
+   overlay positions its match boxes in coordinates measured against the
+   scroller. The two margins are equal and opposite, so the box moves without
+   its width changing and nothing rewraps. */
+.minimap-content-shifted:not(.minimap-disabled)
+    .markdown-source-view.mod-cm6
+    .cm-sizer,
+.minimap-content-shifted:not(.minimap-disabled)
+    .markdown-reading-view
+    .markdown-preview-sizer {
+    margin-left: var(--minimap-sizer-margin-left, auto);
+    margin-right: var(--minimap-sizer-margin-right, auto);
+}

@@ -1,0 +1,41 @@
+/* Bracket colors by nesting depth, separately for dark and light themes.
+   To change them, override these variables in a CSS snippet
+   (Settings → Appearance → CSS snippets). */
+body.theme-dark {
+	--rb-0: #ffb20d; /* level 1 — amber */
+	--rb-1: #da70d6; /* level 2 — orchid */
+	--rb-2: #4fc1ff; /* level 3 — light blue */
+	--rb-3: #6fdc8c; /* level 4 — green, then the cycle repeats */
+	--rb-bad: #ff4d4d;
+	--rb-active-bg: rgba(255, 255, 255, 0.18);
+}
+body.theme-light {
+	--rb-0: #c57815;
+	--rb-1: #a626a4;
+	--rb-2: #0070c1;
+	--rb-3: #2e8b57;
+	--rb-bad: #e00000;
+	--rb-active-bg: rgba(0, 0, 0, 0.12);
+}
+
+.rb-depth-0 { color: var(--rb-0); }
+.rb-depth-1 { color: var(--rb-1); }
+.rb-depth-2 { color: var(--rb-2); }
+.rb-depth-3 { color: var(--rb-3); }
+
+/* Unmatched bracket — red with a dotted underline so it stands out
+   (border instead of text-decoration: the latter is only partially supported on mobile) */
+.rb-unmatched {
+	color: var(--rb-bad);
+	border-bottom: 2px dotted var(--rb-bad);
+	font-weight: bold;
+}
+
+/* Pair at the cursor — background and an inner bottom line.
+   No side borders/outline: they sit exactly where the cursor is drawn and hide it.
+   No font-weight change either, so text doesn't shift. */
+.rb-active {
+	background-color: var(--rb-active-bg);
+	box-shadow: inset 0 -2px 0 currentColor;
+	border-radius: 2px;
+}

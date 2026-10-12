@@ -1,0 +1,10 @@
+{
+	"id": "rainbow-brackets",
+	"name": "Rainbow Brackets",
+	"version": "1.0.2",
+	"minAppVersion": "1.0.0",
+	"description": "Color brackets by nesting depth, highlight the pair at the cursor and mark unmatched brackets in red.",
+	"author": "yndarra",
+	"authorUrl": "https://github.com/yndarra",
+	"isDesktopOnly": false
+}

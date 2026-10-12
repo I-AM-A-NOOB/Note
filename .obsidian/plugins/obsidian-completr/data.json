@@ -5,7 +5,7 @@
   "autoTrigger": true,
   "minWordLength": 2,
   "minWordTriggerLength": 3,
-  "wordInsertionMode": "Ignore-Case & Replace",
+  "wordInsertionMode": "Match-Case & Replace",
   "ignoreDiacriticsWhenFiltering": false,
   "latexProviderEnabled": true,
   "latexTriggerInCodeBlocks": true,

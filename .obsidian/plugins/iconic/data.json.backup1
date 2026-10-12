@@ -27,13 +27,36 @@
     "rulePage": "file"
   },
   "appIcons": {},
-  "tabIcons": {},
+  "tabIcons": {
+    "advanced-tables-toolbar": {
+      "icon": "lucide-table-2"
+    }
+  },
   "fileIcons": {},
   "bookmarkIcons": {},
   "tagIcons": {},
   "propertyIcons": {},
-  "ribbonIcons": {},
-  "fileRules": [],
+  "ribbonIcons": {
+    "table-editor-obsidian:Advanced Tables Toolbar": {
+      "icon": "lucide-table-2"
+    }
+  },
+  "fileRules": [
+    {
+      "id": "4wL8B",
+      "name": "Markdown",
+      "match": "all",
+      "conditions": [
+        {
+          "source": "extension",
+          "operator": "is",
+          "value": "md"
+        }
+      ],
+      "enabled": true,
+      "icon": "lucide-text"
+    }
+  ],
   "folderRules": [],
   "biggerSearchResults": "mobile"
 }

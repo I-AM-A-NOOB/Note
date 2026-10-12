@@ -1,0 +1,10 @@
+{
+    "id": "markdown-minimap",
+    "name": "Markdown Minimap",
+    "author": "Nymbo",
+    "authorUrl": "https://github.com/Nymbo",
+    "description": "Add a minimap to your Markdown notes.",
+    "minAppVersion": "1.8.10",
+    "version": "2.7.0",
+    "isDesktopOnly": false
+}

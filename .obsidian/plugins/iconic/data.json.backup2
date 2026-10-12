@@ -12,7 +12,7 @@
   "showQuickSwitcherIcons": true,
   "showMoveFileIcons": true,
   "showItemName": "desktop",
-  "biggerSearchResults": "mobile",
+  "useSearchKeywords": "on",
   "maxSearchResults": 50,
   "colorPicker1": "list",
   "colorPicker2": "rgb",
@@ -27,12 +27,21 @@
     "rulePage": "file"
   },
   "appIcons": {},
-  "tabIcons": {},
+  "tabIcons": {
+    "advanced-tables-toolbar": {
+      "icon": "lucide-table-2"
+    }
+  },
   "fileIcons": {},
   "bookmarkIcons": {},
   "tagIcons": {},
   "propertyIcons": {},
-  "ribbonIcons": {},
+  "ribbonIcons": {
+    "table-editor-obsidian:Advanced Tables Toolbar": {
+      "icon": "lucide-table-2"
+    }
+  },
   "fileRules": [],
-  "folderRules": []
+  "folderRules": [],
+  "biggerSearchResults": "mobile"
 }
